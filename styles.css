@@ -1,45 +1,23 @@
-body {
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  background-color: #f3f4f6;
-}
-.container {
-  text-align: center;
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-#verification_heading {
-  font-size: 24px;
-  margin-bottom: 10px;
-  color: #333;
-}
-#verification_subtext {
-  font-size: 16px;
-  margin-bottom: 20px;
-  color: #555;
-}
-.code-container {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-.code {
-  width: 40px;
-  height: 50px;
-  font-size: 24px;
-  text-align: center;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  outline: none;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.code:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
+describe('Form Submission Test', () => {
+    const baseUrl = 'http://localhost:3000'; // Replace with the actual base URL of your app
+
+    it('Submits the form and checks the alert for "John Doe"', () => {
+        cy.visit(baseUrl);
+        cy.get('input[name="fname"]').type('John');
+        cy.get('input[name="lname"]').type('Doe');
+        cy.get('input[type="submit"]').click();
+        cy.on('window:alert', (str) => {
+            expect(str).to.equal('John Doe');
+        });
+    });
+
+    it('Submits the form and checks the alert for "John Mark Doe"', () => {
+        cy.visit(baseUrl);
+        cy.get('input[name="fname"]').type('John');
+        cy.get('input[name="lname"]').type('Mark Doe');
+        cy.get('input[type="submit"]').click();
+        cy.on('window:alert', (str) => {
+            expect(str).to.equal('John Mark Doe');
+        });
+    });
+});

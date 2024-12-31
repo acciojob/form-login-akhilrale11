@@ -1,15 +1,23 @@
-// Function to handle form submission
-const getFormvalue = () => {
-  // Get values of the first name and last name inputs
-  const firstName = document.getElementById('code-1').value;
-  const lastName = document.getElementById('code-2').value;
+describe('Form Submission Test', () => {
+    const baseUrl = 'http://localhost:3000'; // Replace with the actual base URL of your app
 
-  // Display the full name in an alert
-  alert(`${firstName} ${lastName}`);
-};
+    it('Submits the form and checks the alert for "John Doe"', () => {
+        cy.visit(baseUrl);
+        cy.get('input[name="fname"]').type('John');
+        cy.get('input[name="lname"]').type('Doe');
+        cy.get('input[type="submit"]').click();
+        cy.on('window:alert', (str) => {
+            expect(str).to.equal('John Doe');
+        });
+    });
 
-// Add event listener for form submission
-document.querySelector('form').addEventListener('submit', (e) => {
-  e.preventDefault(); // Prevent the default form submission
-  getFormvalue(); // Call the function to handle form values
+    it('Submits the form and checks the alert for "John Mark Doe"', () => {
+        cy.visit(baseUrl);
+        cy.get('input[name="fname"]').type('John');
+        cy.get('input[name="lname"]').type('Mark Doe');
+        cy.get('input[type="submit"]').click();
+        cy.on('window:alert', (str) => {
+            expect(str).to.equal('John Mark Doe');
+        });
+    });
 });
